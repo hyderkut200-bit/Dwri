@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#102a43"><title>دوري — طريقك أقرب إلك</title>
+<link rel="preconnect" href="https://unpkg.com"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--navy:#102a43;--blue:#1769aa;--mint:#20c997;--bg:#f3f7fb;--text:#102a43;--muted:#718096;--line:#e5edf4}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Tahoma,Arial,sans-serif;color:var(--text)}.app{max-width:480px;min-height:100vh;margin:auto;background:#fff;position:relative;overflow:hidden;box-shadow:0 0 35px #102a4310}.top{background:linear-gradient(140deg,#102a43,#1769aa);padding:20px 18px 24px;color:white;border-radius:0 0 26px 26px;position:relative;z-index:2}.brandrow{display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px}.logo{width:44px;height:44px;border-radius:15px;background:#fff;color:var(--blue);display:grid;place-items:center;font-size:24px;font-weight:900;box-shadow:0 5px 14px #001c3550}.brand h1{font-size:25px;margin:0;font-weight:900}.brand small{display:block;color:#d6e8f7;font-size:11px;margin-top:3px}.roundbtn{border:1px solid #ffffff40;background:#ffffff17;color:#fff;border-radius:13px;width:42px;height:42px;font-size:20px}.welcome{font-size:14px;margin:19px 0 12px;color:#e7f2fb}.search{display:flex;background:#fff;border-radius:15px;padding:5px 7px;gap:8px;box-shadow:0 6px 18px #061b2a20}.search span{align-self:center;color:#6c8195;font-size:20px;padding:0 7px}.search input{border:0;outline:0;flex:1;min-width:0;font-size:14px;color:var(--text);font-family:inherit}.search button{border:0;background:var(--mint);color:#063e38;border-radius:11px;padding:0 14px;font-weight:800;font-family:inherit}.routebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:12px;border:0;border-radius:13px;background:#20c997;color:#063e38;font-family:inherit;font-weight:900}.routeinfo{display:none;margin:10px 16px 0;padding:12px 14px;background:#eefaf6;border:1px solid #ccefe4;border-radius:14px;font-size:12px;line-height:1.7}.routeinfo b{font-size:13px}.routeinfo small{color:#53756b}.section{padding:18px 16px 0}.heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.heading h2{font-size:16px;margin:0}.heading a{font-size:12px;color:var(--blue);text-decoration:none}.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.quick button{background:#f5f9fc;border:1px solid #edf2f7;border-radius:16px;padding:12px 3px 10px;color:var(--text);font-family:inherit}.quick .ico{width:42px;height:42px;border-radius:14px;margin:0 auto 8px;display:grid;place-items:center;font-size:22px;background:#e4f3ff}.quick button:nth-child(2) .ico{background:#e1f8ef}.quick button:nth-child(3) .ico{background:#fff1d9}.quick button:nth-child(4) .ico{background:#f0e9ff}.quick small{font-size:11px;font-weight:700}.mapbox{margin:0 16px;height:245px;border-radius:20px;overflow:hidden;position:relative;background:#e7eff3;border:1px solid #dce7ee}.maplabel{position:absolute;z-index:500;top:10px;right:10px;background:#fff;border-radius:11px;padding:9px 11px;box-shadow:0 3px 12px #102a4315;font-size:12px;font-weight:bold}.mapstatus{position:absolute;z-index:500;bottom:10px;right:10px;left:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}.pill{background:white;padding:9px 11px;border-radius:12px;font-size:11px;box-shadow:0 3px 12px #102a4315}.green-dot{display:inline-block;width:7px;height:7px;background:#20c997;border-radius:50%;margin-left:5px}.locate{border:0;border-radius:13px;width:42px;height:42px;background:#fff;box-shadow:0 3px 12px #102a4320;font-size:21px;color:var(--blue)}#map{height:100%;width:100%}.directory-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.directory-grid button{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:right;border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px;font-family:inherit;color:var(--text);font-size:23px;min-height:105px}.directory-grid b{font-size:13px}.directory-grid small{font-size:10px;color:var(--muted)}.bottom{position:sticky;bottom:0;display:flex;justify-content:space-around;padding:10px 4px calc(9px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);z-index:600;margin-top:18px}.bottom button{border:0;background:transparent;color:#8494a5;font-family:inherit;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:54px}.bottom button span{font-size:20px}.bottom button.active{color:var(--blue);font-weight:bold}.fab{position:fixed;bottom:83px;left:max(calc((100vw - 440px)/2),18px);z-index:700;border:0;border-radius:16px;background:#ffb547;color:#49300b;font-weight:900;font-family:inherit;padding:13px 16px;box-shadow:0 8px 22px #a76a2a35}.modalbg{display:none;position:fixed;inset:0;background:#061b2a75;z-index:1000;align-items:flex-end;justify-content:center}.modal{background:#fff;border-radius:24px 24px 0 0;padding:23px 20px calc(22px + env(safe-area-inset-bottom));width:min(480px,100%)}.modal h3{margin:0 0 6px;font-size:19px}.modal p{color:var(--muted);font-size:12px;margin:0 0 18px}.reports{display:grid;grid-template-columns:1fr 1fr;gap:10px}.reports button{border:1px solid var(--line);background:#f8fbfd;border-radius:14px;padding:14px 8px;font-family:inherit;font-weight:bold;color:var(--text)}.reports button span{display:block;font-size:23px;margin-bottom:7px}.close{margin-top:15px;width:100%;padding:13px;border:0;border-radius:13px;background:var(--navy);color:#fff;font-family:inherit;font-weight:bold}.toast{display:none;position:fixed;top:16px;left:16px;right:16px;max-width:448px;margin:auto;background:#102a43;color:white;padding:14px;border-radius:14px;z-index:1200;font-size:13px;box-shadow:0 8px 24px #0002}.navpanel{display:none;position:sticky;top:0;z-index:800;margin:10px 16px;padding:14px;background:#102a43;color:white;border-radius:18px;box-shadow:0 8px 24px #102a4330}.navpanel .instruction{font-size:19px;font-weight:900;line-height:1.5}.navpanel .sub{font-size:12px;color:#d6e8f7;margin-top:5px}.navpanel .navactions{display:flex;gap:8px;margin-top:10px}.navpanel button{flex:1;border:0;border-radius:10px;padding:10px;font-family:inherit;font-weight:bold}.suggestions{display:flex;gap:7px;overflow:auto;margin-top:9px}.suggestions button{white-space:nowrap;border:1px solid #ffffff55;background:#ffffff18;color:white;border-radius:20px;padding:8px 10px;font-family:inherit;font-size:11px}.autocomplete-note{padding:9px 12px;background:#f2f8fc;color:#718096;font-size:11px;border-bottom:1px solid #e5edf4}.footnote{text-align:center;font-size:10px;color:#9aa8b5;padding:12px 15px 2px}
+
+/* شاشة ملاحة كاملة مثل تطبيقات الملاحة */
+body.nav-mode{overflow:hidden;background:#e7eff3}
+body.nav-mode .app{max-width:none;width:100%;height:100dvh;min-height:100dvh;overflow:hidden;box-shadow:none;background:#e7eff3}
+body.nav-mode .top,body.nav-mode .app>.section,body.nav-mode .app>#places,body.nav-mode .bottom,body.nav-mode .fab,body.nav-mode .routeinfo{display:none!important}
+body.nav-mode .mapbox{position:fixed;inset:0;margin:0;width:100%;height:100dvh;height:100vh;border:0;border-radius:0;z-index:650}
+body.nav-mode .maplabel{top:auto;bottom:88px;right:12px}
+body.nav-mode .mapstatus{bottom:18px;left:12px;right:12px}
+body.nav-mode .navpanel{display:block!important;position:fixed;top:env(safe-area-inset-top, 0px);left:10px;right:10px;max-width:520px;margin:10px auto 0;padding:16px;z-index:850;border-radius:20px;background:#102a43ee;backdrop-filter:blur(10px)}
+body.nav-mode .navpanel .instruction{font-size:22px}
+body.nav-mode .toast{z-index:1200}
+
+</style></head><body><main class="app">
+<header class="top"><div class="brandrow"><div class="brand"><div class="logo">د</div><div><h1>دوري</h1><small>طريقك، أقرب إلك</small></div></div><button class="roundbtn" onclick="toast('الإشعارات راح تتوفر بالنسخة القادمة')" aria-label="الإشعارات">♧</button></div><p class="welcome">هلا بيك! وين تحب تروح اليوم؟</p><div class="search"><span>⌕</span><input id="destination" placeholder="اكتب اسم المكان وستظهر المقترحات..." autocomplete="off"/><button onclick="searchPlace()">ابحث</button></div><div class="suggestions" id="suggestions"><button onclick="findCategory('hospital')">🏥 مستشفيات</button><button onclick="findCategory('pharmacy')">💊 صيدليات</button><button onclick="findCategory('fuel')">⛽ وقود</button><button onclick="findCategory('food')">🍽️ مطاعم</button><button onclick="setSearch('جامعة واسط')">🎓 جامعة واسط</button><button onclick="setSearch('جسر الكوت')">🌉 جسر الكوت</button></div><div id="searchResults" style="display:none;background:#fff;border-radius:12px;margin-top:8px;overflow:hidden;color:#102a43"></div><button class="routebtn" onclick="buildRoute()">🧭 اعرض الطريق إلى الوجهة</button></header>
+<section class="section"><div class="heading"><h2>اختصارات سريعة</h2><a href="#places" onclick="toast('قريباً: دليل الأماكن')">عرض الكل ←</a></div><div class="quick"><button onclick="findCategory('hospital')"><div class="ico">🏥</div><small>مستشفيات</small></button><button onclick="findCategory('fuel')"><div class="ico">⛽</div><small>وقود</small></button><button onclick="findCategory('food')"><div class="ico">🍽️</div><small>مطاعم</small></button><button onclick="findCategory('pharmacy')"><div class="ico">💊</div><small>صيدليات</small></button></div></section>
+<section class="section"><div class="heading"><h2>الخريطة حولك</h2><a onclick="locateMe()">موقعي الحالي ⌖</a></div></section><div class="mapbox"><div id="map"></div><div class="maplabel">📍 الكوت، واسط</div><div class="mapstatus"><div class="pill"><i class="green-dot"></i><span id="mapState">خريطة تجريبية</span></div><button class="locate" onclick="locateMe()">⌖</button></div></div>
+<div class="navpanel" id="navPanel"><div style="font-size:11px;color:#9cebd7">دوري • الملاحة داخل التطبيق</div><div class="instruction" id="navInstruction">استعد للانطلاق</div><div class="sub" id="navSub">بانتظار تحديد موقعك</div><div class="navactions"><button onclick="toggleVoice()" id="voiceBtn">🔊 الصوت مفعّل</button><button onclick="stopNavigation()" style="background:#ffdddd;color:#8c1c1c">إنهاء</button></div></div><div class="routeinfo" id="routeInfo"></div><section class="section" id="places"><div class="heading"><h2>🏪 دليل الأماكن في واسط</h2><a onclick="document.getElementById('destination').focus()">ابحث ←</a></div><p style="font-size:12px;color:#718096;line-height:1.7;margin:0 0 12px">اختار فئة حتى نبحث عن الأماكن المسجلة على الخريطة. النتائج تعتمد على توفر بيانات الخرائط والإنترنت.</p><div class="directory-grid"><button onclick="findCategory('hospital')">🏥<b>مستشفيات</b><small>مراكز طبية ومستشفيات</small></button><button onclick="findCategory('pharmacy')">💊<b>صيدليات</b><small>صيدليات قريبة</small></button><button onclick="findCategory('fuel')">⛽<b>محطات وقود</b><small>تعبئة الوقود</small></button><button onclick="findCategory('food')">🍽️<b>مطاعم</b><small>مطاعم ومقاهٍ</small></button><button onclick="findCategory('garage')">🛠️<b>ورش سيارات</b><small>صيانة وإطارات</small></button><button onclick="findCategory('market')">🛒<b>أسواق</b><small>متاجر وسوبرماركت</small></button><button onclick="findCategory('atm')">🏧<b>صرافات</b><small>مصارف وأجهزة ATM</small></button><button onclick="findCategory('education')">🎓<b>جامعات ومدارس</b><small>مؤسسات تعليمية</small></button></div><div id="directoryStatus" class="autocomplete-note" style="display:none;margin-top:10px;border-radius:12px"></div></section>
+<section class="section" id="savedPlaces"><div class="heading"><h2>⭐ أماكنك المحفوظة</h2><a onclick="clearSavedPlaces()">مسح الكل</a></div><div id="savedList" style="display:grid;gap:8px"><div class="autocomplete-note" style="border-radius:12px">احفظ الأماكن المهمة حتى توصل إلها بسرعة بالمرة الجاية.</div></div></section>
+<section class="section" id="recentPlaces"><div class="heading"><h2>🕘 عمليات البحث الأخيرة</h2><a onclick="clearRecentPlaces()">مسح</a></div><div id="recentList" style="display:flex;gap:8px;overflow:auto;padding-bottom:4px"><small style="color:#718096">راح تظهر هنا الأماكن اللي تبحث عنها.</small></div></section>
+<div class="footnote">دوري 2.7 تجريبي • دليل الأماكن في واسط</div>
+<nav class="bottom"><button class="active" onclick="tab(this,'الرئيسية')"><span>⌂</span>الرئيسية</button><button onclick="tab(this,'الخريطة')"><span>▧</span>الخريطة</button><button onclick="openReport()"><span>＋</span>بلّغ</button><button onclick="tab(this,'المحفوظات')"><span>♡</span>المحفوظات</button><button onclick="tab(this,'حسابي')"><span>☻</span>حسابي</button></nav>
+</main><button class="fab" onclick="openReport()">＋ بلاغ طريق</button><div class="modalbg" id="reportModal" onclick="if(event.target===this)closeReport()"><div class="modal"><h3>شنو تريد تبلّغ عنه؟</h3><p>اختار نوع البلاغ. سيُحفظ هذا البلاغ على جهازك التجريبي فقط، وليس مشتركاً مع مستخدمين آخرين.</p><div class="reports"><button onclick="sendReport('ازدحام مروري','🚗')"><span>🚗</span>ازدحام مروري</button><button onclick="sendReport('حادث','🚑')"><span>🚑</span>حادث</button><button onclick="sendReport('طريق مغلق','🚧')"><span>🚧</span>طريق مغلق</button><button onclick="sendReport('خطر بالطريق','⚠️')"><span>⚠️</span>خطر بالطريق</button></div><button class="close" onclick="closeReport()">إلغاء</button></div></div><div class="toast" id="toast"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
+let map, userLatLng=null, destinationLatLng=null, routeLine=null, destMarker=null, startMarker=null; const kut=[32.5128,45.8182]; let reportLayer=null; let navWatch=null, navActive=false, voiceOn=true, navSteps=[], navStepIndex=0, navRouteCoords=[], spokenCues={};
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>t.style.display='none',3200)}
+function initMap(){if(!window.L){document.getElementById('mapState').textContent='اتصل بالإنترنت لعرض الخريطة';return}map=L.map('map',{zoomControl:false}).setView(kut,13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);L.control.zoom({position:'bottomleft'}).addTo(map);L.marker(kut).addTo(map).bindPopup('الكوت — واسط');reportLayer=L.layerGroup().addTo(map);loadReports();map.on('click',e=>{window.reportPoint=[e.latlng.lat,e.latlng.lng];toast('تم اختيار موقع على الخريطة للبلاغ. اضغط «بلّغ» لاختيار نوعه.')});setTimeout(()=>map.invalidateSize(),300)}
+function locateMe(){if(!navigator.geolocation){toast('المتصفح ما يدعم تحديد الموقع');return}toast('جارٍ تحديد موقعك...');navigator.geolocation.getCurrentPosition(p=>{userLatLng=[p.coords.latitude,p.coords.longitude];map&&map.setView(userLatLng,16);if(map)L.marker(userLatLng).addTo(map).bindPopup('موقعك الحالي').openPopup();document.getElementById('mapState').textContent='تم تحديد موقعك';toast('تم تحديد موقعك بنجاح')},err=>{let msg='تعذر تحديد الموقع.';if(err&&err.code===1)msg='صلاحية الموقع مرفوضة. اسمح للموقع من إعدادات المتصفح.';else if(err&&err.code===2)msg='إشارة GPS غير متاحة. فعّل الموقع وحاول قرب نافذة أو خارج المبنى.';else if(err&&err.code===3)msg='تأخر GPS. جرّب مرة ثانية.';if(location.protocol==='file:'||location.href.startsWith('content:'))msg+=' لأن الصفحة مفتوحة كملف محلي، قد يمنع أندرويد GPS؛ نحتاج تشغيل دوري من رابط آمن HTTPS.';toast(msg)}, {enableHighAccuracy:true,timeout:15000,maximumAge:5000})}
+async function geocode(v){
+  // Search a few variants because local Iraqi place names may be indexed differently.
+  const queries=[v+'، الكوت، العراق',v+' Kut Iraq',v+' Wasit Iraq',v];
+  let all=[];
+  for(const q of queries){
+    try{
+      const url='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&addressdetails=1&countrycodes=iq&accept-language=ar,en&q='+encodeURIComponent(q);
+      const r=await fetch(url,{headers:{'Accept':'application/json'}});
+      if(!r.ok) continue;
+      const d=await r.json();
+      if(Array.isArray(d)&&d.length){all=all.concat(d);if(all.length>=5)break;}
+    }catch(e){}
+  }
+  const seen=new Set(); all=all.filter(x=>{const k=x.place_id||x.lat+','+x.lon;if(seen.has(k))return false;seen.add(k);return true;}).slice(0,5);
+  if(!all.length) throw new Error('ما لقينا نتائج. جرّب اسم المكان بالعربي أو بالإنكليزي، وتأكد من الإنترنت.');
+  return all.map(x=>({ll:[+x.lat,+x.lon],name:x.display_name,short:(x.name||x.display_name.split(',')[0]),raw:x}));
+}
+function showSearchResults(items){
+  const box=document.getElementById('searchResults');box.innerHTML='';box.style.display='block';
+  items.forEach((item,i)=>{const b=document.createElement('button');b.type='button';b.style.cssText='display:block;width:100%;text-align:right;padding:11px 12px;border:0;border-bottom:1px solid #e5edf4;background:white;font-family:inherit;color:#102a43;font-size:12px';b.innerHTML='📍 <b>'+escapeHtml(item.short)+'</b><br><small style="color:#718096">'+escapeHtml(item.name)+'</small>';b.onclick=()=>selectPlace(item);box.appendChild(b)});
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function selectPlace(item){
+  destinationLatLng=item.ll;window.destinationName=item.short;
+  rememberRecent({name:item.short,full:item.name,ll:item.ll});
+  if(destMarker)map.removeLayer(destMarker);
+  destMarker=L.marker(item.ll).addTo(map).bindPopup(escapeHtml(item.name)).openPopup();
+  map.setView(item.ll,16);setTimeout(()=>map.invalidateSize(),150);
+  document.getElementById('searchResults').style.display='none';
+  document.getElementById('mapState').textContent='تم العثور على الوجهة';
+  renderSavedPlaces();
+  toast('تم تحديد '+item.short+' على الخريطة. اضغط «اعرض الطريق» للمسار.');
+}
+async function searchPlace(){
+  let v=document.getElementById('destination').value.trim(); lastSuggestQuery='';
+  if(!v){toast('اكتب اسم المكان اللي تريد تبحث عنه');return}
+  if(!map){toast('الخريطة لم تجهز بعد. تأكد من الإنترنت وأعد فتح الصفحة.');return}
+  const btn=document.querySelector('.search button');btn.disabled=true;btn.textContent='...';
+  try{toast('جارٍ البحث عن المكان...');const items=await geocode(v);showSearchResults(items);if(items.length===1)selectPlace(items[0]);else toast('اختار المكان الصحيح من النتائج الظاهرة تحت مربع البحث.');}
+  catch(e){toast(e.message||'تعذر البحث حالياً، تأكد من الإنترنت وحاول مجدداً')}
+  finally{btn.disabled=false;btn.textContent='ابحث'}
+}
+let suggestTimer=null, lastSuggestQuery='';
+const destinationInput=document.getElementById('destination');
+destinationInput.addEventListener('input',()=>{
+  clearTimeout(suggestTimer);
+  const q=destinationInput.value.trim(); destinationLatLng=null; window.destinationName='';
+  if(q.length<2){document.getElementById('searchResults').style.display='none';return;}
+  suggestTimer=setTimeout(async()=>{
+    if(q!==destinationInput.value.trim()||q===lastSuggestQuery)return;
+    lastSuggestQuery=q;
+    const box=document.getElementById('searchResults');box.style.display='block';box.innerHTML='<div class="autocomplete-note">🔎 جارٍ اقتراح الأماكن في العراق...</div>';
+    try{
+      const items=await geocode(q);
+      if(q!==destinationInput.value.trim())return;
+      showSearchResults(items);
+      const note=document.createElement('div');note.className='autocomplete-note';note.textContent='اختر المكان الصحيح من المقترحات لعرضه على الخريطة.';box.prepend(note);
+    }catch(e){
+      if(q!==destinationInput.value.trim())return;
+      box.innerHTML='<div class="autocomplete-note">ما لقينا مقترحات بعد. أكمل كتابة الاسم أو اضغط «ابحث».</div>';
+    }
+  },650);
+});
+async function buildRoute(){
+  let v=document.getElementById('destination').value.trim();if(!v){toast('اكتب وجهتك أولاً');return}
+  try{
+    if(!destinationLatLng){const items=await geocode(v);showSearchResults(items);toast('اختار وجهتك من النتائج أولاً، ثم اضغط اعرض الطريق.');return;}
+    if(!userLatLng){toast('نحدد موقعك أولاً لحساب المسار...');await new Promise(resolve=>{if(!navigator.geolocation){resolve();return}navigator.geolocation.getCurrentPosition(p=>{userLatLng=[p.coords.latitude,p.coords.longitude];resolve()},()=>resolve(),{enableHighAccuracy:true,timeout:10000})})}
+    const from=userLatLng||kut;toast('جارٍ حساب المسار...');
+    const url=`https://router.project-osrm.org/route/v1/driving/${from[1]},${from[0]};${destinationLatLng[1]},${destinationLatLng[0]}?overview=full&geometries=geojson&steps=true&annotations=false`;
+    const res=await fetch(url);if(!res.ok)throw new Error('خدمة حساب المسار لا تستجيب حالياً. جرّب بعد قليل.');const data=await res.json();
+    if(data.code!=='Ok'||!data.routes?.length)throw new Error('ما قدرنا نحسب الطريق لهذه الوجهة حالياً.');
+    if(routeLine)map.removeLayer(routeLine);routeLine=L.geoJSON(data.routes[0].geometry,{style:{color:'#1769aa',weight:6,opacity:.95}}).addTo(map);
+    if(destMarker)map.removeLayer(destMarker);destMarker=L.marker(destinationLatLng).addTo(map).bindPopup('📍 الوجهة: '+escapeHtml(window.destinationName||v));
+    if(startMarker)map.removeLayer(startMarker);startMarker=L.marker(from).addTo(map).bindPopup('🚗 نقطة الانطلاق');
+    map.fitBounds(routeLine.getBounds(),{padding:[35,35],maxZoom:16}); destMarker.openPopup();
+    navSteps=(data.routes[0].legs?.[0]?.steps||[]);navStepIndex=0;navRouteCoords=data.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]);const km=(data.routes[0].distance/1000).toFixed(1),mins=Math.round(data.routes[0].duration/60);const box=document.getElementById('routeInfo');box.style.display='block';box.innerHTML=`<b>🧭 المسار إلى ${escapeHtml(window.destinationName||v)}</b><br>🟢 نقطة الانطلاق: ${userLatLng?'موقعك الحالي':'مركز الكوت (تقريبي)'}<br>🔴 الوجهة: ${escapeHtml(window.destinationName||v)}<br>المسافة التقريبية: ${km} كم • الوقت التقديري: ${mins} دقيقة<br><small>إذا لم تسمح للموقع، يبدأ المسار من مركز الكوت بشكل تقريبي. الوقت لا يعكس الزحام المباشر.</small><br><button onclick="startNavigation()" style="margin-top:10px;width:100%;padding:13px;border:0;border-radius:12px;background:#1769aa;color:white;font-family:inherit;font-weight:900;font-size:14px">▶ ابدأ الملاحة داخل دوري</button><button onclick="saveCurrentPlace()" style="margin-top:7px;width:100%;padding:11px;border:1px solid #dce7ee;border-radius:12px;background:white;color:#102a43;font-family:inherit;font-weight:800">⭐ احفظ هذا المكان</button>`;
+    document.getElementById('mapState').textContent='تم عرض المسار';document.getElementById('searchResults').style.display='none';toast('تم عرض المسار على الخريطة');
+  }catch(e){toast(e.message||'تعذر حساب المسار. تحقق من الإنترنت والموقع.')}
+}
+function startNavigation(){
+  if(!destinationLatLng){toast('ابحث عن الوجهة واخترها أولاً');return;}
+  if(!navigator.geolocation){toast('تحديد الموقع غير مدعوم بهذا المتصفح');return;}
+  navActive=true;window.dawriArrived=false;spokenCues={};if('speechSynthesis'in window)speechSynthesis.getVoices();document.body.classList.add('nav-mode');document.getElementById('navPanel').style.display='block';document.getElementById('routeInfo').style.display='none';setTimeout(()=>{if(map)map.invalidateSize(true);},250);
+  document.getElementById('navInstruction').textContent='جارٍ بدء الملاحة…';document.getElementById('navSub').textContent='اسمح بالوصول إلى الموقع وابقِ الصفحة مفتوحة';
+  if(navWatch!==null)navigator.geolocation.clearWatch(navWatch);
+  navWatch=navigator.geolocation.watchPosition(p=>{userLatLng=[p.coords.latitude,p.coords.longitude];if(map){if(!window.userMarker)window.userMarker=L.circleMarker(userLatLng,{radius:8,color:'#fff',weight:3,fillColor:'#1769aa',fillOpacity:1}).addTo(map);else window.userMarker.setLatLng(userLatLng);map.setView(userLatLng,17,{animate:true});}updateNavProgress();},e=>{document.getElementById('navSub').textContent='تعذر تحديث موقعك. تحقق من صلاحية الموقع وGPS.';toast('فعّل الموقع الدقيق GPS واسمح للمتصفح باستخدامه.');},{enableHighAccuracy:true,maximumAge:1500,timeout:15000});
+  document.getElementById('mapState').textContent='الملاحة تعمل داخل دوري';updateNavProgress();toast('بدأت الملاحة داخل دوري. أبقِ الصفحة مفتوحة.');
+}
+function updateNavProgress(){
+  if(!navActive||!userLatLng)return;
+  if(!navSteps.length){document.getElementById('navInstruction').textContent='تابع الخط الأزرق نحو الوجهة';return;}
+  let best=Infinity,bestI=navStepIndex;
+  for(let i=Math.max(0,navStepIndex-1);i<Math.min(navSteps.length,navStepIndex+7);i++){
+    const loc=navSteps[i].maneuver?.location;if(!loc)continue;
+    const d=distMeters(userLatLng,[loc[1],loc[0]]);if(d<best){best=d;bestI=i;}
+  }
+  navStepIndex=Math.max(0,Math.max(navStepIndex,bestI));
+  const st=navSteps[navStepIndex],man=st.maneuver||{},type=man.type||'continue',mod=man.modifier||'';
+  let instruction=type==='turn'?'انعطف '+(mod==='left'?'يساراً':mod==='right'?'يميناً':mod==='slight left'?'يساراً قليلاً':mod==='slight right'?'يميناً قليلاً':mod==='sharp left'?'يساراً بشدة':mod==='sharp right'?'يميناً بشدة':mod==='uturn'?'استدر للخلف':''):
+    type==='arrive'?'وصلت إلى وجهتك':type==='roundabout'?'ادخل الدوار':type==='depart'?'انطلق على الطريق':type==='merge'?'اندماج مع الطريق':type==='fork'?'خذ التفرع '+(mod==='left'?'الأيسر':mod==='right'?'الأيمن':''):type==='on ramp'?'ادخل المنحدر المؤدي للطريق':type==='off ramp'?'اخرج من الطريق عند المخرج':type==='end of road'?'عند نهاية الطريق انعطف '+(mod==='left'?'يساراً':'يميناً'):'تابع السير';
+  const meters=Math.max(0,Math.round(best));
+  document.getElementById('navInstruction').textContent=instruction;
+  document.getElementById('navSub').textContent=(meters<35?'الآن':meters<1000?`بعد ${meters} متر`:`بعد ${(meters/1000).toFixed(1)} كم`)+` • الوجهة: ${window.destinationName||'المكان المحدد'}`;
+  // Speak the upcoming instruction at useful distances, and avoid repeating the same cue.
+  if(voiceOn&&type!=='arrive'){
+    const key=String(navStepIndex);
+    const cue=meters>400&&meters<=550?'بعد نحو نصف كيلومتر، '+instruction:meters>120&&meters<=220?'استعد، '+instruction:meters<=75?instruction:null;
+    const stage=meters>400&&meters<=550?'500':meters>120&&meters<=220?'200':meters<=75?'75':null;
+    if(cue&&stage&&spokenCues[key]!==stage){speak(cue);spokenCues[key]=stage;}
+  }
+  if(type==='arrive'&&best<35&&!window.dawriArrived){window.dawriArrived=true;document.getElementById('navInstruction').textContent='وصلت إلى وجهتك 🎉';document.getElementById('navSub').textContent='تم الوصول إلى الوجهة';speak('وصلت إلى وجهتك');}
+}
+function distMeters(a,b){const R=6371000,rad=x=>x*Math.PI/180,dLat=rad(b[0]-a[0]),dLon=rad(b[1]-a[1]),x=Math.sin(dLat/2)**2+Math.cos(rad(a[0]))*Math.cos(rad(b[0]))*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
+function speak(t){if(!voiceOn||!('speechSynthesis'in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ar-IQ';u.rate=0.88;u.pitch=1;u.volume=1;const voices=speechSynthesis.getVoices();const ar=voices.find(v=>/^ar(-|$)/i.test(v.lang));if(ar)u.voice=ar;speechSynthesis.speak(u)}catch(e){}}
+function toggleVoice(){voiceOn=!voiceOn;document.getElementById('voiceBtn').textContent=voiceOn?'🔊 الصوت مفعّل':'🔇 الصوت متوقف';if(voiceOn)speak('تم تفعيل التوجيه الصوتي. انتبه للطريق واتبع الإرشادات بحذر');}
+function stopNavigation(){navActive=false;document.body.classList.remove('nav-mode');setTimeout(()=>{if(map)map.invalidateSize(true);},250);if(navWatch!==null&&navigator.geolocation)navigator.geolocation.clearWatch(navWatch);navWatch=null;if('speechSynthesis'in window)speechSynthesis.cancel();document.getElementById('navPanel').style.display='none';document.getElementById('mapState').textContent='تم إيقاف الملاحة';toast('تم إنهاء الملاحة');}
+function setSearch(v){document.getElementById('destination').value=v;searchPlace()}
+function getSavedPlaces(){try{return JSON.parse(localStorage.getItem('dawriSavedPlaces')||'[]')}catch(e){return []}}
+function getRecentPlaces(){try{return JSON.parse(localStorage.getItem('dawriRecentPlaces')||'[]')}catch(e){return []}}
+function saveCurrentPlace(){if(!destinationLatLng||!window.destinationName){toast('اختار مكاناً من نتائج البحث أولاً');return}const arr=getSavedPlaces();if(arr.some(x=>x.name===window.destinationName)){toast('هذا المكان محفوظ مسبقاً ⭐');return}arr.unshift({name:window.destinationName,ll:destinationLatLng,full:window.destinationFull||window.destinationName});localStorage.setItem('dawriSavedPlaces',JSON.stringify(arr.slice(0,20)));renderSavedPlaces();toast('تم حفظ المكان ⭐')}
+function rememberRecent(x){const arr=getRecentPlaces().filter(y=>y.name!==x.name);arr.unshift(x);localStorage.setItem('dawriRecentPlaces',JSON.stringify(arr.slice(0,8)));renderRecentPlaces()}
+function goToSaved(x){document.getElementById('destination').value=x.name;destinationLatLng=x.ll;window.destinationName=x.name;if(destMarker)map.removeLayer(destMarker);destMarker=L.marker(x.ll).addTo(map).bindPopup(escapeHtml(x.name)).openPopup();map.setView(x.ll,16);toast('تم تحديد '+x.name+'، اضغط اعرض الطريق')}
+function renderSavedPlaces(){const box=document.getElementById('savedList');if(!box)return;const arr=getSavedPlaces();box.innerHTML='';if(!arr.length){box.innerHTML='<div class="autocomplete-note" style="border-radius:12px">ما عندك أماكن محفوظة بعد. ابحث عن مكان ثم احفظه.</div>';return}arr.forEach(x=>{const b=document.createElement('button');b.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:right;padding:12px;border:1px solid #e5edf4;border-radius:13px;background:#fff;font-family:inherit;color:#102a43';b.innerHTML='<span>⭐ '+escapeHtml(x.name)+'</span><span style="color:#1769aa">افتح ←</span>';b.onclick=()=>goToSaved(x);box.appendChild(b)})}
+function renderRecentPlaces(){const box=document.getElementById('recentList');if(!box)return;const arr=getRecentPlaces();box.innerHTML='';if(!arr.length){box.innerHTML='<small style="color:#718096">راح تظهر هنا الأماكن اللي تبحث عنها.</small>';return}arr.forEach(x=>{const b=document.createElement('button');b.style.cssText='flex:0 0 auto;max-width:190px;text-align:right;padding:10px 12px;border:1px solid #e5edf4;border-radius:13px;background:#f8fbfd;font-family:inherit;color:#102a43;font-size:12px';b.textContent='🕘 '+x.name;b.onclick=()=>goToSaved(x);box.appendChild(b)})}
+function clearSavedPlaces(){localStorage.removeItem('dawriSavedPlaces');renderSavedPlaces();toast('تم مسح الأماكن المحفوظة')}
+function clearRecentPlaces(){localStorage.removeItem('dawriRecentPlaces');renderRecentPlaces();toast('تم مسح سجل البحث')}
+
+async function findCategory(c){
+ const cfg={
+  hospital:{label:'مستشفيات ومراكز طبية',emoji:'🏥',filters:['node[amenity~"^(hospital|clinic|doctors)$"]','way[amenity~"^(hospital|clinic|doctors)$"]','relation[amenity~"^(hospital|clinic|doctors)$"]']},
+  pharmacy:{label:'صيدليات',emoji:'💊',filters:['node[amenity="pharmacy"]','way[amenity="pharmacy"]']},
+  fuel:{label:'محطات وقود',emoji:'⛽',filters:['node[amenity="fuel"]','way[amenity="fuel"]']},
+  food:{label:'مطاعم ومقاهٍ',emoji:'🍽️',filters:['node[amenity~"^(restaurant|cafe|fast_food)$"]','way[amenity~"^(restaurant|cafe|fast_food)$"]']},
+  garage:{label:'ورش سيارات',emoji:'🛠️',filters:['node[shop~"^(car_repair|tyres|car_parts)$"]','way[shop~"^(car_repair|tyres|car_parts)$"]','node[amenity="vehicle_inspection"]','way[amenity="vehicle_inspection"]']},
+  market:{label:'أسواق وسوبرماركت',emoji:'🛒',filters:['node[shop~"^(supermarket|convenience|mall|greengrocer)$"]','way[shop~"^(supermarket|convenience|mall|greengrocer)$"]']},
+  atm:{label:'مصارف وصرافات',emoji:'🏧',filters:['node[amenity~"^(bank|atm)$"]','way[amenity~"^(bank|atm)$"]']},
+  education:{label:'جامعات ومدارس',emoji:'🎓',filters:['node[amenity~"^(university|college|school)$"]','way[amenity~"^(university|college|school)$"]']}
+ };
+ const category=cfg[c];if(!category){return searchPlace()}
+ const box=document.getElementById('searchResults');box.style.display='block';box.innerHTML='<div class="autocomplete-note">🔎 جارٍ البحث عن '+category.label+' في الكوت...</div>';box.scrollIntoView({behavior:'smooth',block:'center'});
+ const around=12000, clauses=category.filters.map(f=>f+'(around:'+around+','+kut[0]+','+kut[1]+');').join('');
+ const query='[out:json][timeout:20];('+clauses+');out center tags;';
+ let data=null,lastError=null;
+ // Try several public Overpass mirrors; a single mirror can be busy or rate-limited.
+ const endpoints=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter','https://overpass.private.coffee/api/interpreter'];
+ for(const endpoint of endpoints){
+  try{
+   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),18000);
+   let response;
+   try{response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8','Accept':'application/json'},body:'data='+encodeURIComponent(query),signal:controller.signal});}
+   finally{clearTimeout(timer)}
+   if(!response.ok)throw new Error('HTTP '+response.status);
+   const parsed=await response.json();if(!Array.isArray(parsed.elements))throw new Error('Invalid response');data=parsed;break;
+  }catch(e){lastError=e}
+ }
+ if(!data){box.innerHTML='<div class="autocomplete-note">تعذر الاتصال بخوادم بيانات الأماكن الآن. هذا عطل مؤقت بالخدمة وليس بالضرورة من هاتفك. اضغط «إعادة المحاولة» بعد قليل.</div><button style="margin-top:8px;padding:10px 16px;border:0;border-radius:12px;background:#20c79a;color:#083344;font-family:inherit" onclick="findCategory(\''+c+'\')">🔄 إعادة المحاولة</button>';toast('خوادم بيانات الأماكن مشغولة؛ جرّب مرة أخرى');return}
+ const items=(data.elements||[]).map(el=>{const tags=el.tags||{},center=el.center;const lat=el.lat??center?.lat,lon=el.lon??center?.lon;if(lat==null||lon==null)return null;const short=tags.name||tags['name:ar']||tags.brand||category.label;const details=[tags['addr:street'],tags['addr:suburb'],tags['addr:city']].filter(Boolean).join('، ');return {ll:[+lat,+lon],short,name:[short,details||tags.amenity||tags.shop||'ضمن الكوت، واسط'].filter(Boolean).join(' — '),raw:el}}).filter(Boolean);
+ const unique=[];const seen=new Set();for(const item of items){const key=item.ll.join(',')+'|'+item.short;if(!seen.has(key)){seen.add(key);unique.push(item)}}
+ unique.sort((a,b)=>distMeters(userLatLng||kut,a.ll)-distMeters(userLatLng||kut,b.ll));
+ document.getElementById('destination').value=category.label+' في الكوت';
+ if(!unique.length){box.innerHTML='<div class="autocomplete-note">ما لقينا أماكن مسجلة بهذه الفئة ضمن بيانات الخريطة قرب الكوت. جرّب البحث باسم المكان أو وسّع البحث لاحقاً.</div>';toast('لا توجد نتائج مسجلة لهذه الفئة حالياً');return}
+ showSearchResults(unique.slice(0,35));const note=document.createElement('div');note.className='autocomplete-note';note.textContent=`${category.emoji} تم العثور على ${Math.min(unique.length,35)} نتيجة مسجلة • اختر المكان لعرضه على الخريطة`;box.prepend(note);toast('ظهرت نتائج '+category.label);
+}
+function openReport(){if(!window.reportPoint&&userLatLng)window.reportPoint=userLatLng;document.getElementById('reportModal').style.display='flex'}function closeReport(){document.getElementById('reportModal').style.display='none'}
+function sendReport(name,icon){closeReport();const ll=window.reportPoint||userLatLng|| (map? [map.getCenter().lat,map.getCenter().lng]:kut);const report={name,icon,ll,at:Date.now()};try{const arr=JSON.parse(localStorage.getItem('dawriReports')||'[]');arr.push(report);localStorage.setItem('dawriReports',JSON.stringify(arr.slice(-50)))}catch(e){}addReportMarker(report);toast(icon+' تم حفظ بلاغ '+name+' على هذا الجهاز فقط. البلاغات غير مشتركة حالياً.');window.reportPoint=null}
+function addReportMarker(r){if(!reportLayer)return;const m=L.marker(r.ll).addTo(reportLayer);m.bindPopup(`${r.icon} ${r.name}<br><small>بلاغ تجريبي محفوظ محلياً</small>`)}function loadReports(){if(!reportLayer)return;try{JSON.parse(localStorage.getItem('dawriReports')||'[]').filter(r=>Date.now()-r.at<24*60*60*1000).forEach(addReportMarker)}catch(e){}}
+function tab(el,name){document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(name==='الخريطة'){document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>map&&map.invalidateSize(),350)}else if(name!=='الرئيسية')toast(name+' راح تتوفر بالنسخة القادمة')}
+initMap();renderSavedPlaces();renderRecentPlaces();
+</script></body></html>
